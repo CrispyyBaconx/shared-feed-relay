@@ -9,6 +9,7 @@ services:
       - TS_STATE_DIR=/var/lib/tailscale
     volumes:
       - tailscale-state-v3:/var/lib/tailscale
+      - tailscale-run:/var/run/tailscale
     devices:
       - /dev/net/tun:/dev/net/tun
     cap_add:
@@ -28,6 +29,9 @@ services:
       - TARGET_PORT=${TARGET_PORT:-12001}
       - LISTEN_PORT=${LISTEN_PORT:-12002}
       - CONNECT_TIMEOUT_SECONDS=${CONNECT_TIMEOUT_SECONDS:-10}
+      - TAILSCALE_SOCKET=/var/run/tailscale/tailscaled.sock
+    volumes:
+      - tailscale-run:/var/run/tailscale
     healthcheck:
       test: ["CMD-SHELL", "pidof socat >/dev/null"]
       interval: 5s
@@ -38,3 +42,4 @@ services:
 
 volumes:
   tailscale-state-v3:
+  tailscale-run:
