@@ -28,7 +28,7 @@ services:
       - TARGET_PORT=${TARGET_PORT:-12001}
       - LISTEN_PORT=${LISTEN_PORT:-12002}
     healthcheck:
-      test: ["CMD-SHELL", "nc -z 127.0.0.1 \"$${LISTEN_PORT:-12002}\""]
+      test: ["CMD-SHELL", "pidof socat >/dev/null"]
       interval: 5s
       timeout: 5s
       retries: 10
